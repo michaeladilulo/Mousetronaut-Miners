@@ -41,20 +41,6 @@ const mousetronautMiners = {
     }
 }
 
-
-
-
-
-
-
-
-
-const gameUpgrades = {
-
-}
-
-// let isCheeseAchievement = gameUpgrades.achievements.isCheeseCollected;
-
 const totalCheeseCount = document.querySelector('.cheese-count');
 const clickToGenerateCheeseResource = document.getElementById('cheeseResource');
 const allResourceUpgradeButtons = document.querySelectorAll('button');
@@ -105,10 +91,10 @@ graterUpgradeButton.addEventListener('click', () => {
 
 function mineCheese() {
     mousetronautMiners.resources.totalCollected++;
-    mousetronautMiners.resources.totalCollected = mousetronautMiners.resources.totalCollected += (gameUpgrades.knives.clickModifier * gameUpgrades.knives.count) + (gameUpgrades.carts.clickModifier * gameUpgrades.carts.count) + (gameUpgrades.mousetronauts.autoModifier * gameUpgrades.mousetronauts.count) + (gameUpgrades.graters.autoModifier * gameUpgrades.graters.count);
+    mousetronautMiners.resources.totalCollected = mousetronautMiners.resources.totalCollected += (mousetronautMiners.gameUpgrades.knives.clickModifier * mousetronautMiners.gameUpgrades.knives.count) + (mousetronautMiners.gameUpgrades.carts.clickModifier * mousetronautMiners.gameUpgrades.carts.count) + (mousetronautMiners.gameUpgrades.mousetronauts.autoModifier * mousetronautMiners.gameUpgrades.mousetronauts.count) + (mousetronautMiners.gameUpgrades.graters.autoModifier * mousetronautMiners.gameUpgrades.graters.count);
     totalCheeseCountCollectedDisplay.innerHTML = mousetronautMiners.resources.totalCollected;
     mousetronautMiners.resources.count++;
-    mousetronautMiners.resources.count = mousetronautMiners.resources.count += (gameUpgrades.knives.clickModifier * gameUpgrades.knives.count) + (gameUpgrades.carts.clickModifier * gameUpgrades.carts.count) + (gameUpgrades.mousetronauts.autoModifier * gameUpgrades.mousetronauts.count) + (gameUpgrades.graters.autoModifier * gameUpgrades.graters.count);
+    mousetronautMiners.resources.count = mousetronautMiners.resources.count += (mousetronautMiners.gameUpgrades.knives.clickModifier * mousetronautMiners.gameUpgrades.knives.count) + (mousetronautMiners.gameUpgrades.carts.clickModifier * mousetronautMiners.gameUpgrades.carts.count) + (mousetronautMiners.gameUpgrades.mousetronauts.autoModifier * mousetronautMiners.gameUpgrades.mousetronauts.count) + (mousetronautMiners.gameUpgrades.graters.autoModifier * mousetronautMiners.gameUpgrades.graters.count);
     totalCheeseCount.innerHTML = mousetronautMiners.resources.count;
     enableButtonsForUpgrades();
     isKnifeActivated();
@@ -119,13 +105,13 @@ function mineCheese() {
 }
 
 function mousetronautDeactivated() {
-    if(gameUpgrades.mousetronauts.count > 0) {
+    if(mousetronautMiners.gameUpgrades.mousetronauts.count > 0) {
         mousetronautUpgradeButton.disabled = true;
     }
 }
 
 function graterDeactivated() {
-    if(gameUpgrades.graters.count > 0) {
+    if(mousetronautMiners.gameUpgrades.graters.count > 0) {
         graterUpgradeButton.disabled = true;
     }
 }
@@ -137,112 +123,112 @@ function disableButtonsAtStart() {
 }
 
 function purchaseCheeseKnifeUpgrade() {
-    gameUpgrades.knives.count++;
-    gameUpgrades.knives.activated = true;
-    mousetronautMiners.resources.count = mousetronautMiners.resources.count -= gameUpgrades.knives.purchasePrice;
+    mousetronautMiners.gameUpgrades.knives.count++;
+    mousetronautMiners.gameUpgrades.knives.activated = true;
+    mousetronautMiners.resources.count = mousetronautMiners.resources.count -= mousetronautMiners.gameUpgrades.knives.purchasePrice;
     totalCheeseCount.innerHTML = mousetronautMiners.resources.count;
     displayNumberOfResources();
-    gameUpgrades.knives.purchasePrice = gameUpgrades.knives.purchasePrice *= Math.floor((gameUpgrades.knives.count / 2) + 1);
-    gameUpgrades.knives.clickModifier = Math.floor(gameUpgrades.knives.count * gameUpgrades.knives.clickModifier / 2.25);
+    mousetronautMiners.gameUpgrades.knives.purchasePrice = mousetronautMiners.gameUpgrades.knives.purchasePrice *= Math.floor((mousetronautMiners.gameUpgrades.knives.count / 2) + 1);
+    mousetronautMiners.gameUpgrades.knives.clickModifier = Math.floor(mousetronautMiners.gameUpgrades.knives.count * mousetronautMiners.gameUpgrades.knives.clickModifier / 2.25);
     notEnoughCheeseForClickResources();
     notEnoughCheeseForAutoResources();
-    gameUpgrades.knives.knifeMultiplier = (gameUpgrades.knives.clickModifier * gameUpgrades.knives.count) + gameUpgrades.knives.clickModifier;
-    totalCheeseMultiplierDisplay.innerHTML = gameUpgrades.knives.knifeMultiplier + gameUpgrades.carts.cartMultiplier + gameUpgrades.mousetronauts.mouseMultiplier + gameUpgrades.graters.graterMultiplier;
+    mousetronautMiners.gameUpgrades.knives.knifeMultiplier = (mousetronautMiners.gameUpgrades.knives.clickModifier * mousetronautMiners.gameUpgrades.knives.count) + mousetronautMiners.gameUpgrades.knives.clickModifier;
+    totalCheeseMultiplierDisplay.innerHTML = mousetronautMiners.gameUpgrades.knives.knifeMultiplier + mousetronautMiners.gameUpgrades.carts.cartMultiplier + mousetronautMiners.gameUpgrades.mousetronauts.mouseMultiplier + mousetronautMiners.gameUpgrades.graters.graterMultiplier;
     changeIconsToUpgradeCount();
-    knifePurchasePriceDisplay.innerHTML = gameUpgrades.knives.purchasePrice;
-    return gameUpgrades.knives.knifeMultiplier;
+    knifePurchasePriceDisplay.innerHTML = mousetronautMiners.gameUpgrades.knives.purchasePrice;
+    return mousetronautMiners.gameUpgrades.knives.knifeMultiplier;
 }
 
 
 function purchaseCartUpgrade() {
-    gameUpgrades.carts.count++;
-    gameUpgrades.carts.activated = true;
-    mousetronautMiners.resources.count = mousetronautMiners.resources.count -= gameUpgrades.carts.purchasePrice;
+    mousetronautMiners.gameUpgrades.carts.count++;
+    mousetronautMiners.gameUpgrades.carts.activated = true;
+    mousetronautMiners.resources.count = mousetronautMiners.resources.count -= mousetronautMiners.gameUpgrades.carts.purchasePrice;
     totalCheeseCount.innerHTML = mousetronautMiners.resources.count;
     displayNumberOfResources();
-    gameUpgrades.carts.purchasePrice = gameUpgrades.carts.purchasePrice *= Math.floor((gameUpgrades.carts.count / 2) + 1);
-    gameUpgrades.carts.clickModifier = Math.floor(gameUpgrades.carts.count * gameUpgrades.carts.clickModifier / 2.25);
+    mousetronautMiners.gameUpgrades.carts.purchasePrice = mousetronautMiners.gameUpgrades.carts.purchasePrice *= Math.floor((mousetronautMiners.gameUpgrades.carts.count / 2) + 1);
+    mousetronautMiners.gameUpgrades.carts.clickModifier = Math.floor(mousetronautMiners.gameUpgrades.carts.count * mousetronautMiners.gameUpgrades.carts.clickModifier / 2.25);
     notEnoughCheeseForClickResources();
     notEnoughCheeseForAutoResources();
-    gameUpgrades.carts.cartMultiplier = (gameUpgrades.carts.clickModifier * gameUpgrades.carts.count) + gameUpgrades.carts.clickModifier;
-    totalCheeseMultiplierDisplay.innerHTML = gameUpgrades.knives.knifeMultiplier + gameUpgrades.carts.cartMultiplier + gameUpgrades.mousetronauts.mouseMultiplier + gameUpgrades.graters.graterMultiplier;
+    mousetronautMiners.gameUpgrades.carts.cartMultiplier = (mousetronautMiners.gameUpgrades.carts.clickModifier * mousetronautMiners.gameUpgrades.carts.count) + mousetronautMiners.gameUpgrades.carts.clickModifier;
+    totalCheeseMultiplierDisplay.innerHTML = mousetronautMiners.gameUpgrades.knives.knifeMultiplier + mousetronautMiners.gameUpgrades.carts.cartMultiplier + mousetronautMiners.gameUpgrades.mousetronauts.mouseMultiplier + mousetronautMiners.gameUpgrades.graters.graterMultiplier;
     changeIconsToUpgradeCount();
-    cartPurchasePriceDisplay.innerHTML = gameUpgrades.carts.purchasePrice;
-    return gameUpgrades.carts.cartMultiplier;
+    cartPurchasePriceDisplay.innerHTML = mousetronautMiners.gameUpgrades.carts.purchasePrice;
+    return mousetronautMiners.gameUpgrades.carts.cartMultiplier;
 }
 
 function purchaseCheeseMousetronautUpgrade() {
-    gameUpgrades.mousetronauts.count++;
+    mousetronautMiners.gameUpgrades.mousetronauts.count++;
     mousetronautDeactivated();
-    gameUpgrades.mousetronauts.activated = true;
-    mousetronautMiners.resources.count = mousetronautMiners.resources.count -= gameUpgrades.mousetronauts.purchasePrice;
+    mousetronautMiners.gameUpgrades.mousetronauts.activated = true;
+    mousetronautMiners.resources.count = mousetronautMiners.resources.count -= mousetronautMiners.gameUpgrades.mousetronauts.purchasePrice;
     totalCheeseCount.innerHTML = mousetronautMiners.resources.count;
     notEnoughCheeseForClickResources();
     notEnoughCheeseForAutoResources();
     setInterval(autoMouseUpgradeModifier, 5000)
     maxMouseAutoUpgradeCount.classList.remove('hide-upgrade-text-icons')
     maxMouseAutoUpgradeCount.classList.add('max-auto-upgrade')
-    gameUpgrades.mousetronauts.autoModifier = (gameUpgrades.mousetronauts.count * gameUpgrades.mousetronauts.autoModifier);
-    gameUpgrades.mousetronauts.mouseMultiplier = (gameUpgrades.mousetronauts.autoModifier * gameUpgrades.mousetronauts.count);
-    totalCheeseMultiplierDisplay.innerHTML = gameUpgrades.knives.knifeMultiplier + gameUpgrades.carts.cartMultiplier + gameUpgrades.mousetronauts.mouseMultiplier + gameUpgrades.graters.graterMultiplier;
-    mousePurchasePriceDisplay.innerHTML = gameUpgrades.mousetronauts.purchasePrice
-    return gameUpgrades.mousetronauts.mouseMultiplier;
+    mousetronautMiners.gameUpgrades.mousetronauts.autoModifier = (mousetronautMiners.gameUpgrades.mousetronauts.count * mousetronautMiners.gameUpgrades.mousetronauts.autoModifier);
+    mousetronautMiners.gameUpgrades.mousetronauts.mouseMultiplier = (mousetronautMiners.gameUpgrades.mousetronauts.autoModifier * mousetronautMiners.gameUpgrades.mousetronauts.count);
+    totalCheeseMultiplierDisplay.innerHTML = mousetronautMiners.gameUpgrades.knives.knifeMultiplier + mousetronautMiners.gameUpgrades.carts.cartMultiplier + mousetronautMiners.gameUpgrades.mousetronauts.mouseMultiplier + mousetronautMiners.gameUpgrades.graters.graterMultiplier;
+    mousePurchasePriceDisplay.innerHTML = mousetronautMiners.gameUpgrades.mousetronauts.purchasePrice
+    return mousetronautMiners.gameUpgrades.mousetronauts.mouseMultiplier;
 }
 
 function purchaseGraterUpgrade() {
     console.log('clicked')
-    gameUpgrades.graters.count++;
+    mousetronautMiners.gameUpgrades.graters.count++;
     graterDeactivated();
-    gameUpgrades.graters.activated = true;
-    mousetronautMiners.resources.count = mousetronautMiners.resources.count -= gameUpgrades.graters.purchasePrice;
+    mousetronautMiners.gameUpgrades.graters.activated = true;
+    mousetronautMiners.resources.count = mousetronautMiners.resources.count -= mousetronautMiners.gameUpgrades.graters.purchasePrice;
     totalCheeseCount.innerHTML = mousetronautMiners.resources.count;
     notEnoughCheeseForClickResources();
     notEnoughCheeseForAutoResources();
     setInterval(autoGraterUpgradeModifier, 3000);
     maxGraterAutoUpgradeCount.classList.remove('hide-upgrade-text-icons')
     maxGraterAutoUpgradeCount.classList.add('max-auto-upgrade')
-    gameUpgrades.graters.autoModifier = (gameUpgrades.graters.count * gameUpgrades.graters.autoModifier);
-    gameUpgrades.graters.graterMultiplier = (gameUpgrades.graters.autoModifier * gameUpgrades.graters.count);
-    totalCheeseMultiplierDisplay.innerHTML = gameUpgrades.knives.knifeMultiplier + gameUpgrades.carts.cartMultiplier + gameUpgrades.mousetronauts.mouseMultiplier + gameUpgrades.graters.graterMultiplier;
-    return gameUpgrades.graters.graterMultiplier;
+    mousetronautMiners.gameUpgrades.graters.autoModifier = (mousetronautMiners.gameUpgrades.graters.count * mousetronautMiners.gameUpgrades.graters.autoModifier);
+    mousetronautMiners.gameUpgrades.graters.graterMultiplier = (mousetronautMiners.gameUpgrades.graters.autoModifier * mousetronautMiners.gameUpgrades.graters.count);
+    totalCheeseMultiplierDisplay.innerHTML = mousetronautMiners.gameUpgrades.knives.knifeMultiplier + mousetronautMiners.gameUpgrades.carts.cartMultiplier + mousetronautMiners.gameUpgrades.mousetronauts.mouseMultiplier + mousetronautMiners.gameUpgrades.graters.graterMultiplier;
+    return mousetronautMiners.gameUpgrades.graters.graterMultiplier;
 }
 
 
 
 function enableButtonsForUpgrades() {
-    if(mousetronautMiners.resources.count >= gameUpgrades.knives.purchasePrice) {
+    if(mousetronautMiners.resources.count >= mousetronautMiners.gameUpgrades.knives.purchasePrice) {
         knifeUpgradeButton.disabled = false;
     }
-    if(mousetronautMiners.resources.count >= gameUpgrades.carts.purchasePrice) {
+    if(mousetronautMiners.resources.count >= mousetronautMiners.gameUpgrades.carts.purchasePrice) {
         cartUpgradeButton.disabled = false;
     }
-    if(mousetronautMiners.resources.count >= gameUpgrades.mousetronauts.purchasePrice && gameUpgrades.mousetronauts.count === 0) {
+    if(mousetronautMiners.resources.count >= mousetronautMiners.gameUpgrades.mousetronauts.purchasePrice && mousetronautMiners.gameUpgrades.mousetronauts.count === 0) {
         mousetronautUpgradeButton.disabled = false;
     }
-    if(mousetronautMiners.resources.count >= gameUpgrades.graters.purchasePrice && gameUpgrades.graters.count === 0) {
+    if(mousetronautMiners.resources.count >= mousetronautMiners.gameUpgrades.graters.purchasePrice && mousetronautMiners.gameUpgrades.graters.count === 0) {
         graterUpgradeButton.disabled = false;
     }
 }
 
 function isKnifeActivated() {
-    if(gameUpgrades.knives.activated) {
-        mousetronautMiners.resources.count = mousetronautMiners.resources.count += gameUpgrades.knives.clickModifier;
+    if(mousetronautMiners.gameUpgrades.knives.activated) {
+        mousetronautMiners.resources.count = mousetronautMiners.resources.count += mousetronautMiners.gameUpgrades.knives.clickModifier;
         totalCheeseCount.innerHTML = mousetronautMiners.resources.count;
     }
     return mousetronautMiners.resources.count;
 }
 
 function isCartActivated() {
-    if(gameUpgrades.carts.activated) {
-        mousetronautMiners.resources.count = mousetronautMiners.resources.count += gameUpgrades.carts.clickModifier;
+    if(mousetronautMiners.gameUpgrades.carts.activated) {
+        mousetronautMiners.resources.count = mousetronautMiners.resources.count += mousetronautMiners.gameUpgrades.carts.clickModifier;
         totalCheeseCount.innerHTML = mousetronautMiners.resources.count;
     }
     return mousetronautMiners.resources.count;
 }
 
 function isMousetronautActivated() {
-    if(gameUpgrades.mousetronauts.activated) {
-        mousetronautMiners.resources.count = mousetronautMiners.resources.count += gameUpgrades.mousetronauts.autoModifier;
+    if(mousetronautMiners.gameUpgrades.mousetronauts.activated) {
+        mousetronautMiners.resources.count = mousetronautMiners.resources.count += mousetronautMiners.gameUpgrades.mousetronauts.autoModifier;
         totalCheeseCount.innerHTML = mousetronautMiners.resources.count;
         mousePurchasePriceDisplay.innerHTML = 'MAX PURCHASED';
     }
@@ -250,8 +236,8 @@ function isMousetronautActivated() {
 }
 
 function isGraterActivated() {
-    if(gameUpgrades.graters.activated) {
-        mousetronautMiners.resources.count = mousetronautMiners.resources.count += gameUpgrades.graters.autoModifier;
+    if(mousetronautMiners.gameUpgrades.graters.activated) {
+        mousetronautMiners.resources.count = mousetronautMiners.resources.count += mousetronautMiners.gameUpgrades.graters.autoModifier;
         totalCheeseCount.innerHTML = mousetronautMiners.resources.count;
         graterPurchasePriceDisplay.innerHTML = 'MAX PURCHASED';
     }
@@ -259,69 +245,69 @@ function isGraterActivated() {
 }
 
 function notEnoughCheeseForClickResources() {
-    if(mousetronautMiners.resources.count < gameUpgrades.knives.purchasePrice) {
+    if(mousetronautMiners.resources.count < mousetronautMiners.gameUpgrades.knives.purchasePrice) {
         knifeUpgradeButton.disabled = true;
     }
-    if(mousetronautMiners.resources.count < gameUpgrades.carts.purchasePrice) {
+    if(mousetronautMiners.resources.count < mousetronautMiners.gameUpgrades.carts.purchasePrice) {
         cartUpgradeButton.disabled = true;
     }
 }
 
 function notEnoughCheeseForAutoResources() {
-    if(mousetronautMiners.resources.count < gameUpgrades.mousetronauts.purchasePrice) {
+    if(mousetronautMiners.resources.count < mousetronautMiners.gameUpgrades.mousetronauts.purchasePrice) {
         mousetronautUpgradeButton.disabled = true;
     }
-    if(mousetronautMiners.resources.count < gameUpgrades.graters.purchasePrice) {
+    if(mousetronautMiners.resources.count < mousetronautMiners.gameUpgrades.graters.purchasePrice) {
         graterUpgradeButton.disabled = true;
     }
 }
 
 function autoMouseUpgradeModifier() {
-    totalCheeseCount.innerHTML = mousetronautMiners.resources.count += gameUpgrades.mousetronauts.autoModifier;
+    totalCheeseCount.innerHTML = mousetronautMiners.resources.count += mousetronautMiners.gameUpgrades.mousetronauts.autoModifier;
     enableButtonsForUpgrades();
 }
 
 function autoGraterUpgradeModifier() {
-    totalCheeseCount.innerHTML = mousetronautMiners.resources.count += gameUpgrades.graters.autoModifier;
+    totalCheeseCount.innerHTML = mousetronautMiners.resources.count += mousetronautMiners.gameUpgrades.graters.autoModifier;
     enableButtonsForUpgrades();
 }
 
 function disableMaxAutoUpgrades() {
-    if(gameUpgrades.mousetronauts.count === 0) {
+    if(mousetronautMiners.gameUpgrades.mousetronauts.count === 0) {
         maxMouseAutoUpgradeCount.classList.add('hide-upgrade-text-icons');
     }
-    if(gameUpgrades.graters.count === 0) {
+    if(mousetronautMiners.gameUpgrades.graters.count === 0) {
         maxGraterAutoUpgradeCount.classList.add('hide-upgrade-text-icons');
     }
 }
 
 function hideIconsPerClickUpgrade() {
-    if(gameUpgrades.knives.count === 0) {
+    if(mousetronautMiners.gameUpgrades.knives.count === 0) {
         knifeUpgradeCount.classList.add('hide-upgrade-text-icons');
     }
 
-    if(gameUpgrades.carts.count === 0) {
+    if(mousetronautMiners.gameUpgrades.carts.count === 0) {
         cartUpgradeCount.classList.add('hide-upgrade-text-icons');
     }
 }
 
 function displayNumberOfResources() {
-    if(gameUpgrades.knives.count >= 1) {
+    if(mousetronautMiners.gameUpgrades.knives.count >= 1) {
         knifeUpgradeCount.classList.remove('hide-upgrade-text-icons');
-        knifeUpgradeCount.innerHTML = `${'<i class="fa-solid fa-pen-nib"></i>'}`.repeat(gameUpgrades.knives.count);
+        knifeUpgradeCount.innerHTML = `${'<i class="fa-solid fa-pen-nib"></i>'}`.repeat(mousetronautMiners.gameUpgrades.knives.count);
     }
-    if(gameUpgrades.carts.count >= 1) {
+    if(mousetronautMiners.gameUpgrades.carts.count >= 1) {
         cartUpgradeCount.classList.remove('hide-upgrade-text-icons');
-        cartUpgradeCount.innerHTML = `${'<i class="fa-solid fa-cart-shopping"></i>'}`.repeat(gameUpgrades.carts.count);
+        cartUpgradeCount.innerHTML = `${'<i class="fa-solid fa-cart-shopping"></i>'}`.repeat(mousetronautMiners.gameUpgrades.carts.count);
     }
 }
 
 function changeIconsToUpgradeCount() {
-    if(gameUpgrades.knives.count >= 11) {
-        knifeUpgradeCount.innerHTML = gameUpgrades.knives.count;
+    if(mousetronautMiners.gameUpgrades.knives.count >= 11) {
+        knifeUpgradeCount.innerHTML = mousetronautMiners.gameUpgrades.knives.count;
     }
-    if(gameUpgrades.carts.count >= 11) {
-        cartUpgradeCount.innerHTML = gameUpgrades.carts.count;
+    if(mousetronautMiners.gameUpgrades.carts.count >= 11) {
+        cartUpgradeCount.innerHTML = mousetronautMiners.gameUpgrades.carts.count;
     }
 }
 
