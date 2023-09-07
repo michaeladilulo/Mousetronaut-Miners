@@ -1,38 +1,41 @@
 let cheeseCount = 0;
 let totalCheeseCountCollected = 0;
-let knifeCount = 0;
-let cartCount = 0;
-let mousetronautCount = 0;
-let graterCount = 0;
+let cartCount = 0; //TODO
+let mousetronautCount = 0; //TODO
+let graterCount = 0; //TODO
 let knifeMultiplier = 0;
 let cartMultiplier = 0;
 let mouseMultiplier = 0;
 let graterMultiplier = 0;
 let isAchievementAchieved = false;
-let achievementCount = 0;
+let achievementCount = 0; // TODO
 
 const gameUpgrades = {
     knives: {
         purchasePrice: 5,
         clickModifier: 7,
-        activated: false
+        activated: false,
+        count: 0
     },
     carts: {
         purchasePrice: 15,
         clickModifier: 12,
-        activated: false
+        activated: false,
+        count: 0
     },
     mousetronauts: {
         purchasePrice: 50,
         autoModifier: 80,
-        activated: false
+        activated: false,
+        count: 0
     },
     graters: {
         purchasePrice: 500,
         autoModifier: 150,
-        activated: false
+        activated: false,
+        count: 0
     },
-    achievements: {
+    achievements: { //TODO
         isCheeseCollected: false
     }
 }
@@ -105,10 +108,10 @@ graterUpgradeButton.addEventListener('click', () => {
 
 function mineCheese() {
     totalCheeseCountCollected++;
-    totalCheeseCountCollected = totalCheeseCountCollected += (knifeClickModifier * knifeCount) + (cartClickModifier * cartCount) + (mousetronautAutoModifier * mousetronautCount) + (graterAutoModifier * graterCount);
+    totalCheeseCountCollected = totalCheeseCountCollected += (knifeClickModifier * gameUpgrades.knives.count) + (cartClickModifier * cartCount) + (mousetronautAutoModifier * mousetronautCount) + (graterAutoModifier * graterCount);
     totalCheeseCountCollectedDisplay.innerHTML = totalCheeseCountCollected;
     cheeseCount++;
-    cheeseCount = cheeseCount += (knifeClickModifier * knifeCount) + (cartClickModifier * cartCount) + (mousetronautAutoModifier * mousetronautCount) + (graterAutoModifier * graterCount);
+    cheeseCount = cheeseCount += (knifeClickModifier * gameUpgrades.knives.count) + (cartClickModifier * cartCount) + (mousetronautAutoModifier * mousetronautCount) + (graterAutoModifier * graterCount);
     totalCheeseCount.innerHTML = cheeseCount;
     enableButtonsForUpgrades();
     isKnifeActivated();
@@ -137,16 +140,16 @@ function disableButtonsAtStart() {
 }
 
 function purchaseCheeseKnifeUpgrade() {
-    knifeCount++;
+    gameUpgrades.knives.count++;
     knifeActivated = true;
     cheeseCount = cheeseCount -= knifePurchasePrice;
     totalCheeseCount.innerHTML = cheeseCount;
     displayNumberOfResources();
-    knifePurchasePrice = knifePurchasePrice *= Math.floor((knifeCount / 2) + 1);
-    knifeClickModifier = Math.floor(knifeCount * knifeClickModifier / 2.25);
+    knifePurchasePrice = knifePurchasePrice *= Math.floor((gameUpgrades.knives.count / 2) + 1);
+    knifeClickModifier = Math.floor(gameUpgrades.knives.count * knifeClickModifier / 2.25);
     notEnoughCheeseForClickResources();
     notEnoughCheeseForAutoResources();
-    knifeMultiplier = (knifeClickModifier * knifeCount) + knifeClickModifier;
+    knifeMultiplier = (knifeClickModifier * gameUpgrades.knives.count) + knifeClickModifier;
     totalCheeseMultiplierDisplay.innerHTML = knifeMultiplier + cartMultiplier + mouseMultiplier + graterMultiplier;
     changeIconsToUpgradeCount();
     knifePurchasePriceDisplay.innerHTML = knifePurchasePrice;
@@ -296,7 +299,7 @@ function disableMaxAutoUpgrades() {
 }
 
 function hideIconsPerClickUpgrade() {
-    if(knifeCount === 0) {
+    if(gameUpgrades.knives.count === 0) {
         knifeUpgradeCount.classList.add('hide-upgrade-text-icons');
     }
 
@@ -306,9 +309,9 @@ function hideIconsPerClickUpgrade() {
 }
 
 function displayNumberOfResources() {
-    if(knifeCount >= 1) {
+    if(gameUpgrades.knives.count >= 1) {
         knifeUpgradeCount.classList.remove('hide-upgrade-text-icons');
-        knifeUpgradeCount.innerHTML = `${'<i class="fa-solid fa-pen-nib"></i>'}`.repeat(knifeCount);
+        knifeUpgradeCount.innerHTML = `${'<i class="fa-solid fa-pen-nib"></i>'}`.repeat(gameUpgrades.knives.count);
     }
     if(cartCount >= 1) {
         cartUpgradeCount.classList.remove('hide-upgrade-text-icons');
@@ -317,8 +320,8 @@ function displayNumberOfResources() {
 }
 
 function changeIconsToUpgradeCount() {
-    if(knifeCount >= 11) {
-        knifeUpgradeCount.innerHTML = knifeCount;
+    if(gameUpgrades.knives.count >= 11) {
+        knifeUpgradeCount.innerHTML = gameUpgrades.knives.count;
     }
     if(cartCount >= 11) {
         cartUpgradeCount.innerHTML = cartCount;
