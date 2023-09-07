@@ -37,7 +37,6 @@ const gameUpgrades = {
     }
 }
 
-let knifeActivated = gameUpgrades.knives.activated; //TODO
 let knifeClickModifier = gameUpgrades.knives.clickModifier; //TODO
 
 let cartPurchasePrice = gameUpgrades.carts.purchasePrice; //TODO
@@ -137,7 +136,7 @@ function disableButtonsAtStart() {
 
 function purchaseCheeseKnifeUpgrade() {
     gameUpgrades.knives.count++;
-    knifeActivated = true;
+    gameUpgrades.knives.activated = true;
     cheeseCount = cheeseCount -= gameUpgrades.knives.purchasePrice;
     totalCheeseCount.innerHTML = cheeseCount;
     displayNumberOfResources();
@@ -224,7 +223,7 @@ function enableButtonsForUpgrades() {
 }
 
 function isKnifeActivated() {
-    if(knifeActivated) {
+    if(gameUpgrades.knives.activated) {
         cheeseCount = cheeseCount += knifeClickModifier;
         totalCheeseCount.innerHTML = cheeseCount;
     }
