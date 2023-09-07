@@ -37,10 +37,6 @@ const gameUpgrades = {
     }
 }
 
-let cartPurchasePrice = gameUpgrades.carts.purchasePrice; //TODO
-let cartActivated = gameUpgrades.carts.activated; //TODO
-let cartClickModifier = gameUpgrades.carts.clickModifier; //TODO
-
 let mousetronautPurchasePrice = gameUpgrades.mousetronauts.purchasePrice;
 let mousetronautActivated = gameUpgrades.mousetronauts.activated;
 let mousetronautAutoModifier = gameUpgrades.mousetronauts.autoModifier;
@@ -101,10 +97,10 @@ graterUpgradeButton.addEventListener('click', () => {
 
 function mineCheese() {
     totalCheeseCountCollected++;
-    totalCheeseCountCollected = totalCheeseCountCollected += (gameUpgrades.knives.clickModifier * gameUpgrades.knives.count) + (cartClickModifier * gameUpgrades.carts.count) + (mousetronautAutoModifier * gameUpgrades.mousetronauts.count) + (graterAutoModifier * gameUpgrades.graters.count);
+    totalCheeseCountCollected = totalCheeseCountCollected += (gameUpgrades.knives.clickModifier * gameUpgrades.knives.count) + (gameUpgrades.carts.clickModifier * gameUpgrades.carts.count) + (mousetronautAutoModifier * gameUpgrades.mousetronauts.count) + (graterAutoModifier * gameUpgrades.graters.count);
     totalCheeseCountCollectedDisplay.innerHTML = totalCheeseCountCollected;
     cheeseCount++;
-    cheeseCount = cheeseCount += (gameUpgrades.knives.clickModifier * gameUpgrades.knives.count) + (cartClickModifier * gameUpgrades.carts.count) + (mousetronautAutoModifier * gameUpgrades.mousetronauts.count) + (graterAutoModifier * gameUpgrades.graters.count);
+    cheeseCount = cheeseCount += (gameUpgrades.knives.clickModifier * gameUpgrades.knives.count) + (gameUpgrades.carts.clickModifier * gameUpgrades.carts.count) + (mousetronautAutoModifier * gameUpgrades.mousetronauts.count) + (graterAutoModifier * gameUpgrades.graters.count);
     totalCheeseCount.innerHTML = cheeseCount;
     enableButtonsForUpgrades();
     isKnifeActivated();
@@ -152,18 +148,18 @@ function purchaseCheeseKnifeUpgrade() {
 
 function purchaseCartUpgrade() {
     gameUpgrades.carts.count++;
-    cartActivated = true;
-    cheeseCount = cheeseCount -= cartPurchasePrice;
+    gameUpgrades.carts.activated = true;
+    cheeseCount = cheeseCount -= gameUpgrades.carts.purchasePrice;
     totalCheeseCount.innerHTML = cheeseCount;
     displayNumberOfResources();
-    cartPurchasePrice = cartPurchasePrice *= Math.floor((gameUpgrades.carts.count / 2) + 1);
-    cartClickModifier = Math.floor(gameUpgrades.carts.count * cartClickModifier / 2.25);
+    gameUpgrades.carts.purchasePrice = gameUpgrades.carts.purchasePrice *= Math.floor((gameUpgrades.carts.count / 2) + 1);
+    gameUpgrades.carts.clickModifier = Math.floor(gameUpgrades.carts.count * gameUpgrades.carts.clickModifier / 2.25);
     notEnoughCheeseForClickResources();
     notEnoughCheeseForAutoResources();
-    gameUpgrades.carts.cartMultiplier = (cartClickModifier * gameUpgrades.carts.count) + cartClickModifier;
+    gameUpgrades.carts.cartMultiplier = (gameUpgrades.carts.clickModifier * gameUpgrades.carts.count) + gameUpgrades.carts.clickModifier;
     totalCheeseMultiplierDisplay.innerHTML = gameUpgrades.knives.knifeMultiplier + gameUpgrades.carts.cartMultiplier + gameUpgrades.mousetronauts.mouseMultiplier + gameUpgrades.graters.graterMultiplier;
     changeIconsToUpgradeCount();
-    cartPurchasePriceDisplay.innerHTML = cartPurchasePrice;
+    cartPurchasePriceDisplay.innerHTML = gameUpgrades.carts.purchasePrice;
     return gameUpgrades.carts.cartMultiplier;
 }
 
@@ -209,7 +205,7 @@ function enableButtonsForUpgrades() {
     if(cheeseCount >= gameUpgrades.knives.purchasePrice) {
         knifeUpgradeButton.disabled = false;
     }
-    if(cheeseCount >= cartPurchasePrice) {
+    if(cheeseCount >= gameUpgrades.carts.purchasePrice) {
         cartUpgradeButton.disabled = false;
     }
     if(cheeseCount >= mousetronautPurchasePrice && gameUpgrades.mousetronauts.count === 0) {
@@ -229,8 +225,8 @@ function isKnifeActivated() {
 }
 
 function isCartActivated() {
-    if(cartActivated) {
-        cheeseCount = cheeseCount += cartClickModifier;
+    if(gameUpgrades.carts.activated) {
+        cheeseCount = cheeseCount += gameUpgrades.carts.clickModifier;
         totalCheeseCount.innerHTML = cheeseCount;
     }
     return cheeseCount;
@@ -258,7 +254,7 @@ function notEnoughCheeseForClickResources() {
     if(cheeseCount < gameUpgrades.knives.purchasePrice) {
         knifeUpgradeButton.disabled = true;
     }
-    if(cheeseCount < cartPurchasePrice) {
+    if(cheeseCount < gameUpgrades.carts.purchasePrice) {
         cartUpgradeButton.disabled = true;
     }
 }
