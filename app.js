@@ -1,6 +1,5 @@
 let cheeseCount = 0;
 let totalCheeseCountCollected = 0;
-let mouseMultiplier = 0; //TODO
 let graterMultiplier = 0; //TODO
 let isAchievementAchieved = false;
 let achievementCount = 0; // TODO
@@ -24,7 +23,8 @@ const gameUpgrades = {
         purchasePrice: 50,
         autoModifier: 80,
         activated: false,
-        count: 0
+        count: 0,
+        mouseMultiplier: 0
     },
     graters: {
         purchasePrice: 500,
@@ -147,7 +147,7 @@ function purchaseCheeseKnifeUpgrade() {
     notEnoughCheeseForClickResources();
     notEnoughCheeseForAutoResources();
     gameUpgrades.knives.knifeMultiplier = (knifeClickModifier * gameUpgrades.knives.count) + knifeClickModifier;
-    totalCheeseMultiplierDisplay.innerHTML = gameUpgrades.knives.knifeMultiplier + gameUpgrades.carts.cartMultiplier + mouseMultiplier + graterMultiplier;
+    totalCheeseMultiplierDisplay.innerHTML = gameUpgrades.knives.knifeMultiplier + gameUpgrades.carts.cartMultiplier + gameUpgrades.mousetronauts.mouseMultiplier + graterMultiplier;
     changeIconsToUpgradeCount();
     knifePurchasePriceDisplay.innerHTML = knifePurchasePrice;
     return gameUpgrades.knives.knifeMultiplier;
@@ -165,7 +165,7 @@ function purchaseCartUpgrade() {
     notEnoughCheeseForClickResources();
     notEnoughCheeseForAutoResources();
     gameUpgrades.carts.cartMultiplier = (cartClickModifier * gameUpgrades.carts.count) + cartClickModifier;
-    totalCheeseMultiplierDisplay.innerHTML = gameUpgrades.knives.knifeMultiplier + gameUpgrades.carts.cartMultiplier + mouseMultiplier + graterMultiplier;
+    totalCheeseMultiplierDisplay.innerHTML = gameUpgrades.knives.knifeMultiplier + gameUpgrades.carts.cartMultiplier + gameUpgrades.mousetronauts.mouseMultiplier + graterMultiplier;
     changeIconsToUpgradeCount();
     cartPurchasePriceDisplay.innerHTML = cartPurchasePrice;
     return gameUpgrades.carts.cartMultiplier;
@@ -183,10 +183,10 @@ function purchaseCheeseMousetronautUpgrade() {
     maxMouseAutoUpgradeCount.classList.remove('hide-upgrade-text-icons')
     maxMouseAutoUpgradeCount.classList.add('max-auto-upgrade')
     mousetronautAutoModifier = (gameUpgrades.mousetronauts.count * mousetronautAutoModifier);
-    mouseMultiplier = (mousetronautAutoModifier * gameUpgrades.mousetronauts.count);
-    totalCheeseMultiplierDisplay.innerHTML = gameUpgrades.knives.knifeMultiplier + gameUpgrades.carts.cartMultiplier + mouseMultiplier + graterMultiplier;
+    gameUpgrades.mousetronauts.mouseMultiplier = (mousetronautAutoModifier * gameUpgrades.mousetronauts.count);
+    totalCheeseMultiplierDisplay.innerHTML = gameUpgrades.knives.knifeMultiplier + gameUpgrades.carts.cartMultiplier + gameUpgrades.mousetronauts.mouseMultiplier + graterMultiplier;
     mousePurchasePriceDisplay.innerHTML = mousetronautPurchasePrice
-    return mouseMultiplier;
+    return gameUpgrades.mousetronauts.mouseMultiplier;
 }
 
 function purchaseGraterUpgrade() {
@@ -203,7 +203,7 @@ function purchaseGraterUpgrade() {
     maxGraterAutoUpgradeCount.classList.add('max-auto-upgrade')
     graterAutoModifier = (gameUpgrades.graters.count * graterAutoModifier);
     graterMultiplier = (graterAutoModifier * gameUpgrades.graters.count);
-    totalCheeseMultiplierDisplay.innerHTML = gameUpgrades.knives.knifeMultiplier + gameUpgrades.carts.cartMultiplier + mouseMultiplier + graterMultiplier;
+    totalCheeseMultiplierDisplay.innerHTML = gameUpgrades.knives.knifeMultiplier + gameUpgrades.carts.cartMultiplier + gameUpgrades.mousetronauts.mouseMultiplier + graterMultiplier;
     return graterMultiplier;
 }
 
