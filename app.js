@@ -10,14 +10,14 @@ const mousetronautMiners = {
             clickModifier: 7,
             activated: false,
             count: 0,
-            knifeMultiplier: 0
+            multiplier: 0
         },
         carts: {
             purchasePrice: 15,
             clickModifier: 12,
             activated: false,
             count: 0,
-            cartMultiplier: 0
+            multiplier: 0
         },
         mousetronauts: {
             purchasePrice: 50,
@@ -74,11 +74,11 @@ mineCheese();
 });
 
 knifeUpgradeButton.addEventListener('click', () => {
-    purchaseCheeseKnifeUpgrade();
+    purchaseClickUpgrade(knives);
 })
 
 cartUpgradeButton.addEventListener('click', () => {
-    purchaseCartUpgrade();
+    purchaseClickUpgrade(carts);
 })
 
 mousetronautUpgradeButton.addEventListener('click', () => {
@@ -122,39 +122,33 @@ function disableButtonsAtStart() {
     }
 }
 
-function purchaseCheeseKnifeUpgrade() {
-    mousetronautMiners.gameUpgrades.knives.count++;
-    mousetronautMiners.gameUpgrades.knives.activated = true;
-    mousetronautMiners.resources.count = mousetronautMiners.resources.count -= mousetronautMiners.gameUpgrades.knives.purchasePrice;
-    totalCheeseCount.innerHTML = mousetronautMiners.resources.count;
-    displayNumberOfResources();
-    mousetronautMiners.gameUpgrades.knives.purchasePrice = mousetronautMiners.gameUpgrades.knives.purchasePrice *= Math.floor((mousetronautMiners.gameUpgrades.knives.count / 2) + 1);
-    mousetronautMiners.gameUpgrades.knives.clickModifier = Math.floor(mousetronautMiners.gameUpgrades.knives.count * mousetronautMiners.gameUpgrades.knives.clickModifier / 2.25);
-    notEnoughCheeseForClickResources();
-    notEnoughCheeseForAutoResources();
-    mousetronautMiners.gameUpgrades.knives.knifeMultiplier = (mousetronautMiners.gameUpgrades.knives.clickModifier * mousetronautMiners.gameUpgrades.knives.count) + mousetronautMiners.gameUpgrades.knives.clickModifier;
-    totalCheeseMultiplierDisplay.innerHTML = mousetronautMiners.gameUpgrades.knives.knifeMultiplier + mousetronautMiners.gameUpgrades.carts.cartMultiplier + mousetronautMiners.gameUpgrades.mousetronauts.mouseMultiplier + mousetronautMiners.gameUpgrades.graters.graterMultiplier;
-    changeIconsToUpgradeCount();
-    knifePurchasePriceDisplay.innerHTML = mousetronautMiners.gameUpgrades.knives.purchasePrice;
-    return mousetronautMiners.gameUpgrades.knives.knifeMultiplier;
-}
+let knives = mousetronautMiners.gameUpgrades.knives;
+let carts = mousetronautMiners.gameUpgrades.carts;
+let mousetronauts = mousetronautMiners.gameUpgrades.mousetronauts;
+let graters = mousetronautMiners.gameUpgrades.graters;
 
 
-function purchaseCartUpgrade() {
-    mousetronautMiners.gameUpgrades.carts.count++;
-    mousetronautMiners.gameUpgrades.carts.activated = true;
-    mousetronautMiners.resources.count = mousetronautMiners.resources.count -= mousetronautMiners.gameUpgrades.carts.purchasePrice;
+function purchaseClickUpgrade(upgrade) {
+    upgrade.count++;
+    upgrade.activated = true;
+    mousetronautMiners.resources.count = mousetronautMiners.resources.count -= upgrade.purchasePrice;
     totalCheeseCount.innerHTML = mousetronautMiners.resources.count;
     displayNumberOfResources();
-    mousetronautMiners.gameUpgrades.carts.purchasePrice = mousetronautMiners.gameUpgrades.carts.purchasePrice *= Math.floor((mousetronautMiners.gameUpgrades.carts.count / 2) + 1);
-    mousetronautMiners.gameUpgrades.carts.clickModifier = Math.floor(mousetronautMiners.gameUpgrades.carts.count * mousetronautMiners.gameUpgrades.carts.clickModifier / 2.25);
+    upgrade.purchasePrice = upgrade.purchasePrice *= Math.floor((upgrade.count / 2) + 1);
+    upgrade.clickModifier = Math.floor(upgrade.count * upgrade.clickModifier / 2.25);
     notEnoughCheeseForClickResources();
     notEnoughCheeseForAutoResources();
-    mousetronautMiners.gameUpgrades.carts.cartMultiplier = (mousetronautMiners.gameUpgrades.carts.clickModifier * mousetronautMiners.gameUpgrades.carts.count) + mousetronautMiners.gameUpgrades.carts.clickModifier;
-    totalCheeseMultiplierDisplay.innerHTML = mousetronautMiners.gameUpgrades.knives.knifeMultiplier + mousetronautMiners.gameUpgrades.carts.cartMultiplier + mousetronautMiners.gameUpgrades.mousetronauts.mouseMultiplier + mousetronautMiners.gameUpgrades.graters.graterMultiplier;
+    upgrade.multiplier = (upgrade.clickModifier * upgrade.count) + upgrade.clickModifier;
+    totalCheeseMultiplierDisplay.innerHTML = mousetronautMiners.gameUpgrades.knives.multiplier + mousetronautMiners.gameUpgrades.carts.multiplier + mousetronautMiners.gameUpgrades.mousetronauts.mouseMultiplier + mousetronautMiners.gameUpgrades.graters.graterMultiplier;
     changeIconsToUpgradeCount();
-    cartPurchasePriceDisplay.innerHTML = mousetronautMiners.gameUpgrades.carts.purchasePrice;
-    return mousetronautMiners.gameUpgrades.carts.cartMultiplier;
+    if(upgrade === knives) {
+        knifePurchasePriceDisplay.innerHTML = upgrade.purchasePrice;
+    }
+    if(upgrade === carts) {
+        cartPurchasePriceDisplay.innerHTML = upgrade.purchasePrice;
+    }
+   
+    return upgrade.multiplier;
 }
 
 function purchaseCheeseMousetronautUpgrade() {
@@ -176,7 +170,6 @@ function purchaseCheeseMousetronautUpgrade() {
 }
 
 function purchaseGraterUpgrade() {
-    console.log('clicked')
     mousetronautMiners.gameUpgrades.graters.count++;
     graterDeactivated();
     mousetronautMiners.gameUpgrades.graters.activated = true;
@@ -194,6 +187,11 @@ function purchaseGraterUpgrade() {
 }
 
 
+
+//NOTE - NEW FUNCTION TO TRY OUT WITH REFACTOR
+function calculateTotalResourceCollected() {
+    return totalCheeseMultiplierDisplay.innerHTML = mousetronautMiners.gameUpgrades.knives.knifeMultiplier + mousetronautMiners.gameUpgrades.carts.cartMultiplier + mousetronautMiners.gameUpgrades.mousetronauts.mouseMultiplier + mousetronautMiners.gameUpgrades.graters.graterMultiplier;
+}
 
 function enableButtonsForUpgrades() {
     if(mousetronautMiners.resources.count >= mousetronautMiners.gameUpgrades.knives.purchasePrice) {
@@ -316,7 +314,6 @@ function changeIconsToUpgradeCount() {
 
 function enableAchievements() {
     mousetronautMiners.achievements.unlocked;
-    console.log('made it here')
     if(mousetronautMiners.resources.totalCollected >= 100) {
         mousetronautMiners.achievements.unlocked = true;
         mousetronautMiners.achievements.count++;
