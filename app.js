@@ -86,7 +86,7 @@ mousetronautUpgradeButton.addEventListener('click', () => {
 })
 
 graterUpgradeButton.addEventListener('click', () => {
-    purchaseGraterUpgrade();
+    purchaseAutoUpgrade(graters);
 })
 
 function mineCheese() {
@@ -153,34 +153,23 @@ function purchaseAutoUpgrade(upgrade) {
     mousetronautMiners.resources.count = mousetronautMiners.resources.count -= upgrade.purchasePrice;
     totalCheeseCount.innerHTML = mousetronautMiners.resources.count;
     notEnoughCheeseForUpgradePurchase(upgrade);
-    setInterval(autoMouseUpgradeModifier, 5000)
-    maxMouseAutoUpgradeCount.classList.remove('hide-upgrade-text-icons')
-    maxMouseAutoUpgradeCount.classList.add('max-auto-upgrade')
+
+    if(upgrade === mousetronauts) {
+        setInterval(autoMouseUpgradeModifier, 5000)
+        maxMouseAutoUpgradeCount.classList.remove('hide-upgrade-text-icons')
+        maxMouseAutoUpgradeCount.classList.add('max-auto-upgrade')
+    } else if(upgrade === graters) {
+        setInterval(autoGraterUpgradeModifier, 3000);
+        maxGraterAutoUpgradeCount.classList.remove('hide-upgrade-text-icons')
+        maxGraterAutoUpgradeCount.classList.add('max-auto-upgrade')
+    }
+
     upgrade.autoModifier = (upgrade.count * upgrade.autoModifier);
     upgrade.multiplier = (upgrade.autoModifier * upgrade.count);
     totalCheeseMultiplierDisplay.innerHTML = knives.multiplier + carts.multiplier + mousetronauts.multiplier + graters.multiplier;
     mousePurchasePriceDisplay.innerHTML = upgrade.purchasePrice
     return upgrade.multiplier;
 }
-
-function purchaseGraterUpgrade() {
-    // mousetronautMiners.gameUpgrades.graters.count++;
-    // isAutoUpgradesDeactivated(upgrade);
-    // mousetronautMiners.gameUpgrades.graters.activated = true;
-    // mousetronautMiners.resources.count = mousetronautMiners.resources.count -= mousetronautMiners.gameUpgrades.graters.purchasePrice;
-    // totalCheeseCount.innerHTML = mousetronautMiners.resources.count;
-    // notEnoughCheeseForClickResources();
-    // notEnoughCheeseForAutoResources();
-    setInterval(autoGraterUpgradeModifier, 3000);
-    maxGraterAutoUpgradeCount.classList.remove('hide-upgrade-text-icons')
-    maxGraterAutoUpgradeCount.classList.add('max-auto-upgrade')
-    mousetronautMiners.gameUpgrades.graters.autoModifier = (mousetronautMiners.gameUpgrades.graters.count * mousetronautMiners.gameUpgrades.graters.autoModifier);
-    mousetronautMiners.gameUpgrades.graters.graterMultiplier = (mousetronautMiners.gameUpgrades.graters.autoModifier * mousetronautMiners.gameUpgrades.graters.count);
-    totalCheeseMultiplierDisplay.innerHTML = mousetronautMiners.gameUpgrades.knives.knifeMultiplier + mousetronautMiners.gameUpgrades.carts.cartMultiplier + mousetronautMiners.gameUpgrades.mousetronauts.mouseMultiplier + mousetronautMiners.gameUpgrades.graters.graterMultiplier;
-    return mousetronautMiners.gameUpgrades.graters.graterMultiplier;
-}
-
-
 
 //NOTE - NEW FUNCTION TO TRY OUT WITH REFACTOR
 function calculateTotalResourceCollected() {
