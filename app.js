@@ -24,14 +24,14 @@ const mousetronautMiners = {
             autoModifier: 80,
             activated: false,
             count: 0,
-            mouseMultiplier: 0
+            multiplier: 0
         },
         graters: {
             purchasePrice: 500,
             autoModifier: 150,
             activated: false,
             count: 0,
-            graterMultiplier: 0
+            multiplier: 0
         }
     },
 
@@ -82,7 +82,7 @@ cartUpgradeButton.addEventListener('click', () => {
 })
 
 mousetronautUpgradeButton.addEventListener('click', () => {
-    purchaseCheeseMousetronautUpgrade();
+    purchaseAutoUpgrade(mousetronauts);
 })
 
 graterUpgradeButton.addEventListener('click', () => {
@@ -139,7 +139,7 @@ function purchaseClickUpgrade(upgrade) {
     notEnoughCheeseForClickResources();
     notEnoughCheeseForAutoResources();
     upgrade.multiplier = (upgrade.clickModifier * upgrade.count) + upgrade.clickModifier;
-    totalCheeseMultiplierDisplay.innerHTML = mousetronautMiners.gameUpgrades.knives.multiplier + mousetronautMiners.gameUpgrades.carts.multiplier + mousetronautMiners.gameUpgrades.mousetronauts.mouseMultiplier + mousetronautMiners.gameUpgrades.graters.graterMultiplier;
+    totalCheeseMultiplierDisplay.innerHTML = knives.multiplier + carts.multiplier + mousetronauts.multiplier + graters.multiplier;
     changeIconsToUpgradeCount();
     if(upgrade === knives) {
         knifePurchasePriceDisplay.innerHTML = upgrade.purchasePrice;
@@ -151,22 +151,22 @@ function purchaseClickUpgrade(upgrade) {
     return upgrade.multiplier;
 }
 
-function purchaseCheeseMousetronautUpgrade() {
-    mousetronautMiners.gameUpgrades.mousetronauts.count++;
+function purchaseAutoUpgrade(upgrade) {
+    upgrade.count++;
     mousetronautDeactivated();
-    mousetronautMiners.gameUpgrades.mousetronauts.activated = true;
-    mousetronautMiners.resources.count = mousetronautMiners.resources.count -= mousetronautMiners.gameUpgrades.mousetronauts.purchasePrice;
+    upgrade.activated = true;
+    mousetronautMiners.resources.count = mousetronautMiners.resources.count -= upgrade.purchasePrice;
     totalCheeseCount.innerHTML = mousetronautMiners.resources.count;
     notEnoughCheeseForClickResources();
     notEnoughCheeseForAutoResources();
     setInterval(autoMouseUpgradeModifier, 5000)
     maxMouseAutoUpgradeCount.classList.remove('hide-upgrade-text-icons')
     maxMouseAutoUpgradeCount.classList.add('max-auto-upgrade')
-    mousetronautMiners.gameUpgrades.mousetronauts.autoModifier = (mousetronautMiners.gameUpgrades.mousetronauts.count * mousetronautMiners.gameUpgrades.mousetronauts.autoModifier);
-    mousetronautMiners.gameUpgrades.mousetronauts.mouseMultiplier = (mousetronautMiners.gameUpgrades.mousetronauts.autoModifier * mousetronautMiners.gameUpgrades.mousetronauts.count);
-    totalCheeseMultiplierDisplay.innerHTML = mousetronautMiners.gameUpgrades.knives.knifeMultiplier + mousetronautMiners.gameUpgrades.carts.cartMultiplier + mousetronautMiners.gameUpgrades.mousetronauts.mouseMultiplier + mousetronautMiners.gameUpgrades.graters.graterMultiplier;
-    mousePurchasePriceDisplay.innerHTML = mousetronautMiners.gameUpgrades.mousetronauts.purchasePrice
-    return mousetronautMiners.gameUpgrades.mousetronauts.mouseMultiplier;
+    upgrade.autoModifier = (upgrade.count * upgrade.autoModifier);
+    upgrade.multiplier = (upgrade.autoModifier * upgrade.count);
+    totalCheeseMultiplierDisplay.innerHTML = knives.multiplier + carts.multiplier + mousetronauts.multiplier + graters.multiplier;
+    mousePurchasePriceDisplay.innerHTML = upgrade.purchasePrice
+    return upgrade.multiplier;
 }
 
 function purchaseGraterUpgrade() {
