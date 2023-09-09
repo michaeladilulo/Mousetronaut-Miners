@@ -104,14 +104,10 @@ function mineCheese() {
     enableAchievements();
 }
 
-function mousetronautDeactivated() {
-    if(mousetronautMiners.gameUpgrades.mousetronauts.count > 0) {
+function isAutoUpgradesDeactivated(upgrade) {
+    if(upgrade.count > 0 && upgrade === mousetronauts) {
         mousetronautUpgradeButton.disabled = true;
-    }
-}
-
-function graterDeactivated() {
-    if(mousetronautMiners.gameUpgrades.graters.count > 0) {
+    } else if(upgrade.count > 0 && upgrade === graters) {
         graterUpgradeButton.disabled = true;
     }
 }
@@ -136,8 +132,7 @@ function purchaseClickUpgrade(upgrade) {
     displayNumberOfResources();
     upgrade.purchasePrice = upgrade.purchasePrice *= Math.floor((upgrade.count / 2) + 1);
     upgrade.clickModifier = Math.floor(upgrade.count * upgrade.clickModifier / 2.25);
-    notEnoughCheeseForClickResources();
-    notEnoughCheeseForAutoResources();
+    notEnoughCheeseForUpgradePurchase(upgrade);
     upgrade.multiplier = (upgrade.clickModifier * upgrade.count) + upgrade.clickModifier;
     totalCheeseMultiplierDisplay.innerHTML = knives.multiplier + carts.multiplier + mousetronauts.multiplier + graters.multiplier;
     changeIconsToUpgradeCount();
@@ -153,12 +148,11 @@ function purchaseClickUpgrade(upgrade) {
 
 function purchaseAutoUpgrade(upgrade) {
     upgrade.count++;
-    mousetronautDeactivated();
+    isAutoUpgradesDeactivated(upgrade);
     upgrade.activated = true;
     mousetronautMiners.resources.count = mousetronautMiners.resources.count -= upgrade.purchasePrice;
     totalCheeseCount.innerHTML = mousetronautMiners.resources.count;
-    notEnoughCheeseForClickResources();
-    notEnoughCheeseForAutoResources();
+    notEnoughCheeseForUpgradePurchase(upgrade);
     setInterval(autoMouseUpgradeModifier, 5000)
     maxMouseAutoUpgradeCount.classList.remove('hide-upgrade-text-icons')
     maxMouseAutoUpgradeCount.classList.add('max-auto-upgrade')
@@ -170,13 +164,13 @@ function purchaseAutoUpgrade(upgrade) {
 }
 
 function purchaseGraterUpgrade() {
-    mousetronautMiners.gameUpgrades.graters.count++;
-    graterDeactivated();
-    mousetronautMiners.gameUpgrades.graters.activated = true;
-    mousetronautMiners.resources.count = mousetronautMiners.resources.count -= mousetronautMiners.gameUpgrades.graters.purchasePrice;
-    totalCheeseCount.innerHTML = mousetronautMiners.resources.count;
-    notEnoughCheeseForClickResources();
-    notEnoughCheeseForAutoResources();
+    // mousetronautMiners.gameUpgrades.graters.count++;
+    // isAutoUpgradesDeactivated(upgrade);
+    // mousetronautMiners.gameUpgrades.graters.activated = true;
+    // mousetronautMiners.resources.count = mousetronautMiners.resources.count -= mousetronautMiners.gameUpgrades.graters.purchasePrice;
+    // totalCheeseCount.innerHTML = mousetronautMiners.resources.count;
+    // notEnoughCheeseForClickResources();
+    // notEnoughCheeseForAutoResources();
     setInterval(autoGraterUpgradeModifier, 3000);
     maxGraterAutoUpgradeCount.classList.remove('hide-upgrade-text-icons')
     maxGraterAutoUpgradeCount.classList.add('max-auto-upgrade')
@@ -242,21 +236,17 @@ function isGraterActivated() {
     return mousetronautMiners.resources.count;
 }
 
-function notEnoughCheeseForClickResources() {
-    if(mousetronautMiners.resources.count < mousetronautMiners.gameUpgrades.knives.purchasePrice) {
-        knifeUpgradeButton.disabled = true;
-    }
-    if(mousetronautMiners.resources.count < mousetronautMiners.gameUpgrades.carts.purchasePrice) {
-        cartUpgradeButton.disabled = true;
-    }
-}
-
-function notEnoughCheeseForAutoResources() {
-    if(mousetronautMiners.resources.count < mousetronautMiners.gameUpgrades.mousetronauts.purchasePrice) {
-        mousetronautUpgradeButton.disabled = true;
-    }
-    if(mousetronautMiners.resources.count < mousetronautMiners.gameUpgrades.graters.purchasePrice) {
-        graterUpgradeButton.disabled = true;
+function notEnoughCheeseForUpgradePurchase(upgrade) {
+    if(mousetronautMiners.resources.count < upgrade.purchasePrice) {
+        if(upgrade === knives) {
+            knifeUpgradeButton.disabled = true;
+        } else if(upgrade === carts) {
+            cartUpgradeButton.disabled = true;
+        } else if(upgrade === mousetronauts) {
+            mousetronautUpgradeButton.disabled = true;
+        } else if(upgrade === graters) {
+            graterUpgradeButton.disabled = true;
+        }
     }
 }
 
