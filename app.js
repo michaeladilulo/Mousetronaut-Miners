@@ -165,16 +165,14 @@ function purchaseAutoUpgrade(upgrade) {
     ableToPurchaseUpgrade(upgrade)
 
     if(upgrade === mousetronauts) {
-        console.log('THREE');
-        setInterval(autoMouseUpgradeModifier, 5000)
+        setInterval(function() {addsAutoUpgradeModifierToTotalCount(upgrade);}, 5000)
         maxMouseAutoUpgradeCount.classList.remove('hide-upgrade-text-icons')
         maxMouseAutoUpgradeCount.classList.add('max-auto-upgrade')
     } else if(upgrade === graters) {
-        setInterval(autoGraterUpgradeModifier, 3000);
+        setInterval(function() {addsAutoUpgradeModifierToTotalCount(upgrade);}, 3000);
         maxGraterAutoUpgradeCount.classList.remove('hide-upgrade-text-icons')
         maxGraterAutoUpgradeCount.classList.add('max-auto-upgrade')
     }
-    console.log('FOUR');
     upgrade.autoModifier = (upgrade.count * upgrade.autoModifier);
     upgrade.multiplier = (upgrade.autoModifier * upgrade.count);
     totalCheeseMultiplierDisplay.innerHTML = knives.multiplier + carts.multiplier + mousetronauts.multiplier + graters.multiplier;
@@ -278,15 +276,20 @@ function ableToPurchaseUpgrade(upgrade) {
 //     }
 // }
 
-function autoMouseUpgradeModifier() {
-    totalCheeseCount.innerHTML = mousetronautMiners.resources.count += mousetronautMiners.gameUpgrades.mousetronauts.autoModifier;
+function addsAutoUpgradeModifierToTotalCount(upgrade) {
+    totalCheeseCount.innerText = mousetronautMiners.resources.count += upgrade.autoModifier;
     enableButtonsForUpgrades();
 }
 
-function autoGraterUpgradeModifier() {
-    totalCheeseCount.innerHTML = mousetronautMiners.resources.count += mousetronautMiners.gameUpgrades.graters.autoModifier;
-    enableButtonsForUpgrades();
-}
+// function autoMouseUpgradeModifier() {
+//     totalCheeseCount.innerHTML = mousetronautMiners.resources.count += mousetronautMiners.gameUpgrades.mousetronauts.autoModifier;
+//     enableButtonsForUpgrades();
+// }
+
+// function autoGraterUpgradeModifier() {
+//     totalCheeseCount.innerHTML = mousetronautMiners.resources.count += mousetronautMiners.gameUpgrades.graters.autoModifier;
+//     enableButtonsForUpgrades();
+// }
 
 function disableMaxAutoUpgrades() {
     if(mousetronautMiners.gameUpgrades.mousetronauts.count === 0) {
