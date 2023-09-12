@@ -105,13 +105,14 @@ graterUpgradeButton.addEventListener('click', () => {
 
 function mineCheese() {
     mousetronautMiners.resources.totalCollected++;
-    mousetronautMiners.resources.totalCollected = mousetronautMiners.resources.totalCollected += (mousetronautMiners.gameUpgrades.knives.modifier * mousetronautMiners.gameUpgrades.knives.count) + (mousetronautMiners.gameUpgrades.carts.modifier * mousetronautMiners.gameUpgrades.carts.count) + (mousetronautMiners.gameUpgrades.mousetronauts.modifier * mousetronautMiners.gameUpgrades.mousetronauts.count) + (mousetronautMiners.gameUpgrades.graters.modifier * mousetronautMiners.gameUpgrades.graters.count);
+    mousetronautMiners.resources.totalCollected = mousetronautMiners.resources.totalCollected += 
+        (mousetronautMiners.gameUpgrades.knives.modifier * mousetronautMiners.gameUpgrades.knives.count) + 
+        (mousetronautMiners.gameUpgrades.carts.modifier * mousetronautMiners.gameUpgrades.carts.count);
     totalCheeseCountCollectedDisplay.innerHTML = mousetronautMiners.resources.totalCollected;
     mousetronautMiners.resources.count++;
     mousetronautMiners.resources.count = mousetronautMiners.resources.count += (mousetronautMiners.gameUpgrades.knives.modifier * mousetronautMiners.gameUpgrades.knives.count) + (mousetronautMiners.gameUpgrades.carts.modifier * mousetronautMiners.gameUpgrades.carts.count) + (mousetronautMiners.gameUpgrades.mousetronauts.modifier * mousetronautMiners.gameUpgrades.mousetronauts.count) + (mousetronautMiners.gameUpgrades.graters.modifier * mousetronautMiners.gameUpgrades.graters.count);
     totalCheeseCount.innerHTML = mousetronautMiners.resources.count;
-    enableButtonsForUpgrades(upgrade);
-    isUpgradeActivated(upgrade);
+    enableButtonsForUpgrades();
     enableAchievements();
 }
 
@@ -157,82 +158,45 @@ function purchaseClickUpgrade(upgrade) {
 
 function purchaseAutoUpgrade(upgrade) {
     upgrade.count++;
-    if(upgrade === mousetronauts) {
-        mousetronautDeactivated();
-    } else if(upgrade === graters) {
-        graterDeactivated();
-    }
     upgrade.activated = true;
     mousetronautMiners.resources.count = mousetronautMiners.resources.count -= upgrade.purchasePrice;
     totalCheeseCount.innerHTML = mousetronautMiners.resources.count;
-    ableToPurchaseUpgrade(upgrade)
+    ableToPurchaseUpgrade(upgrade); // based off of current cheese totals
 
     if(upgrade === mousetronauts) {
+        mousetronautDeactivated();
         setInterval(function() {addsAutoUpgradeModifierToTotalCount(upgrade);}, 5000)
         maxMouseAutoUpgradeCount.classList.remove('hide-upgrade-text-icons')
-        maxMouseAutoUpgradeCount.classList.add('max-auto-upgrade')
+        maxMouseAutoUpgradeCount.classList.add('max-auto-upgrade');
+        mousePurchasePriceDisplay.innerHTML = 'MAX PURCHASED';
     } else if(upgrade === graters) {
+        
+        graterDeactivated();
         setInterval(function() {addsAutoUpgradeModifierToTotalCount(upgrade);}, 3000);
         maxGraterAutoUpgradeCount.classList.remove('hide-upgrade-text-icons')
-        maxGraterAutoUpgradeCount.classList.add('max-auto-upgrade')
+        maxGraterAutoUpgradeCount.classList.add('max-auto-upgrade');
+        graterPurchasePriceDisplay.innerHTML = 'MAX PURCHASED';
     }
-    upgrade.modifier = (upgrade.count * upgrade.modifier);
-    upgrade.multiplier = (upgrade.modifier * upgrade.count);
-    totalCheeseMultiplierDisplay.innerHTML = knives.multiplier + carts.multiplier + mousetronauts.multiplier + graters.multiplier;
-    return upgrade.multiplier;
-
 }
 
-//NOTE - Working on switch statement currently
-//FIXME - Currently not behaving as expected
-//NOTE - Not entirely sure Switch is best to handle it, only evaluates once?
+// Mike was smart here and Collin was dumb (Collin is sorry)
 function enableButtonsForUpgrades() {
-    switch(mousetronautMiners.resources.count) {
-        case knives.purchasePrice:
-                knifeUpgradeButton.disabled = false;
-            break;
-        case carts.purchasePrice:
-            console.log('CARTS')
-            cartUpgradeButton.disabled = false;
-            break;
-        case mousetronauts.purchasePrice:
-            console.log('MOUSETRONAUTS')
-            mousetronautUpgradeButton.disabled = false;
-            break;
-        case graters.purchasePrice:
-            console.log('GRATERS')
-            graterUpgradeButton.disabled = false;
+    if(mousetronautMiners.resources.count >= mousetronautMiners.gameUpgrades.knives.purchasePrice) {
+        knifeUpgradeButton.disabled = false;
+    }
+    if(mousetronautMiners.resources.count >= mousetronautMiners.gameUpgrades.carts.purchasePrice) {
+        cartUpgradeButton.disabled = false;
+    }
+    if(mousetronautMiners.resources.count >= mousetronautMiners.gameUpgrades.mousetronauts.purchasePrice && mousetronautMiners.gameUpgrades.mousetronauts.count === 0) {
+        mousetronautUpgradeButton.disabled = false;
+    }
+    if(mousetronautMiners.resources.count >= mousetronautMiners.gameUpgrades.graters.purchasePrice && mousetronautMiners.gameUpgrades.graters.count === 0) {
+        graterUpgradeButton.disabled = false;
     }
 }
 
-// function enableButtonsForUpgrades() {
-//     if(mousetronautMiners.resources.count >= mousetronautMiners.gameUpgrades.knives.purchasePrice) {
-//         knifeUpgradeButton.disabled = false;
-//     }
-//     if(mousetronautMiners.resources.count >= mousetronautMiners.gameUpgrades.carts.purchasePrice) {
-//         cartUpgradeButton.disabled = false;
-//     }
-//     if(mousetronautMiners.resources.count >= mousetronautMiners.gameUpgrades.mousetronauts.purchasePrice && mousetronautMiners.gameUpgrades.mousetronauts.count === 0) {
-//         mousetronautUpgradeButton.disabled = false;
-//     }
-//     if(mousetronautMiners.resources.count >= mousetronautMiners.gameUpgrades.graters.purchasePrice && mousetronautMiners.gameUpgrades.graters.count === 0) {
-//         graterUpgradeButton.disabled = false;
-//     }
-// }
-
-function isUpgradeActivated(upgrade) {
-    if(upgrade.activated) {
-        mousetronautMiners.resources.count = mousetronautMiners.resources.count += upgrade.modifier;
-        totalCheeseCount.innerHTML = mousetronautMiners.resources.count;
-        if(upgrade === mousetronauts) {
-            mousePurchasePriceDisplay.innerHTML = 'MAX PURCHASED';
-        } else if(upgrade === graters) {
-            graterPurchasePriceDisplay.innerHTML = 'MAX PURCHASED';
-        }
-    }
-    return mousetronautMiners.resources.count;
-}
-
+// TODO: Fix this method (create a new one if you have to)
+// TODO: currently enabling ALL buttons based off the purchase price of ONE upgrade
 function ableToPurchaseUpgrade(upgrade) {
     for(button of allResourceUpgradeButtons) {
         if(mousetronautMiners.resources.count < upgrade.purchasePrice) {
