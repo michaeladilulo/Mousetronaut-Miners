@@ -107,7 +107,9 @@ function mineCheese() {
         (mousetronautMiners.gameUpgrades.carts.modifier * mousetronautMiners.gameUpgrades.carts.count);
     totalCheeseCountCollectedDisplay.innerHTML = mousetronautMiners.resources.totalCollected;
     mousetronautMiners.resources.count++;
-    mousetronautMiners.resources.count = mousetronautMiners.resources.count += (mousetronautMiners.gameUpgrades.knives.modifier * mousetronautMiners.gameUpgrades.knives.count) + (mousetronautMiners.gameUpgrades.carts.modifier * mousetronautMiners.gameUpgrades.carts.count) + (mousetronautMiners.gameUpgrades.mousetronauts.modifier * mousetronautMiners.gameUpgrades.mousetronauts.count) + (mousetronautMiners.gameUpgrades.graters.modifier * mousetronautMiners.gameUpgrades.graters.count);
+    mousetronautMiners.resources.count = mousetronautMiners.resources.count += 
+    (mousetronautMiners.gameUpgrades.knives.modifier * mousetronautMiners.gameUpgrades.knives.count) +
+     (mousetronautMiners.gameUpgrades.carts.modifier * mousetronautMiners.gameUpgrades.carts.count);
     totalCheeseCount.innerHTML = mousetronautMiners.resources.count;
     enableButtonsForUpgrades();
     enableAchievements();
