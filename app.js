@@ -46,9 +46,6 @@ const mousetronautMiners = {
 }
 
 //FIXME - When purchasing click upgrades, the buttons for the auto upgrades appears
-//FIXME - The purchase prices for the click upgrades goes into effect AFTER it's been selected once instead of simultaneously
-//FIXME - MAX PURCHASED upgrades does not appear at all
-//FIXME - Total Cheese Multiplier math is off
 
 const totalCheeseCount = document.querySelector('.cheese-count');
 const clickToGenerateCheeseResource = document.getElementById('cheeseResource');
