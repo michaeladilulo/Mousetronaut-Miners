@@ -10,32 +10,28 @@ const mousetronautMiners = {
             modifier: 7,
             activated: false,
             count: 0,
-            multiplier: 0,
-            singular: 'Knife'
+            multiplier: 0
         },
         carts: {
             purchasePrice: 15,
             modifier: 12,
             activated: false,
             count: 0,
-            multiplier: 0,
-            singular: 'Cart'
+            multiplier: 0
         },
         mousetronauts: {
             purchasePrice: 50,
             modifier: 80,
             activated: false,
             count: 0,
-            multiplier: 0,
-            singular: 'Mousetronaut'
+            multiplier: 0
         },
         graters: {
             purchasePrice: 500,
             modifier: 150,
             activated: false,
             count: 0,
-            multiplier: 0,
-            singular: 'Grater'
+            multiplier: 0
         }
     },
 
