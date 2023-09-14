@@ -64,6 +64,7 @@ const graterPurchasePriceDisplay = document.querySelector('.grater-purchase-pric
 let totalCheeseCountCollectedDisplay = document.querySelector('.total-cheese-count-collected');
 const achievementDisplay = document.querySelector('.achievement-display');
 const achievementDisplaySection = document.querySelector('.achievement-display-section');
+const cheeseCollectedPerSecond = document.querySelector('.cheese-stat-cps-count');
 
 let knives = mousetronautMiners.gameUpgrades.knives;
 let carts = mousetronautMiners.gameUpgrades.carts;
@@ -107,6 +108,10 @@ function mineCheese() {
     totalCheeseCount.innerHTML = mousetronautMiners.resources.count;
     ableToPurchaseUpgrade();
     enableAchievements();
+
+    //NOTE: Calculates Cheese Per Second after everything is clicked and factored in
+    let minutes = Math.floor(mousetronautMiners.resources.count / 60); //NOTE Calculates Minutes
+    cheeseCollectedPerSecond.innerHTML = minutes % 60 //NOTE Calculates Seconds
 }
 
 function mousetronautDeactivated() {
