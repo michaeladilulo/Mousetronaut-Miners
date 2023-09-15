@@ -110,8 +110,21 @@ function mineCheese() {
     enableAchievements();
 
     //NOTE: Calculates Cheese Per Second after everything is clicked and factored in
-    let minutes = Math.floor(mousetronautMiners.resources.count / 60); //NOTE Calculates Minutes
-    cheeseCollectedPerSecond.innerHTML = minutes % 60 //NOTE Calculates Seconds
+    //NOTE: let minutes = Math.floor(mousetronautMiners.resources.count / 60); //NOTE Calculates Minutes
+    //NOTE: cheeseCollectedPerSecond.innerHTML = minutes % 60 //NOTE Calculates Seconds
+
+    calculateCheeseCollectedPerSecond();
+}
+
+//NOTE: Holding me up: Keeps returning infinity
+let startTime = Date.now() / 1000;
+let timePassed = (Date.now() - startTime)
+
+
+function calculateCheeseCollectedPerSecond() {
+    console.log(timePassed)
+    //NOTE When I console.log timePassed, it returns 0
+    cheeseCollectedPerSecond.innerHTML = mousetronautMiners.resources.count / timePassed;
 }
 
 function mousetronautDeactivated() {
